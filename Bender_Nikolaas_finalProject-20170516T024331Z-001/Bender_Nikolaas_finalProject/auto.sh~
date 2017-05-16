@@ -1,0 +1,67 @@
+#! /bin/bash
+
+run () {
+    echo "$*"
+    if $*
+    then echo 'success'
+    else echo 'error'
+    fi
+}
+
+echo 'PLEASE PRESS crtl d TO CONTINUE'
+
+#============================================================
+#THIS IS FOR THE FILE THE PROGRAM READS FROM
+#============================================================
+#A VARIABLE TO CHANGE WHERE STUFF IS
+file="/home/programmer/Bender_Nikolaas_finalProject/rdin.txt"
+#THIS DELETES THE
+if [ -f $file ] ; then
+    rm $file
+    touch $file
+else
+    touch $file
+fi
+
+
+
+#============================================================
+#THIS IS TO GET AND OR UPDATE THE SQLITE APP THAT YOU NEED TO
+#MAKE THIS PROGRAM WORK
+#============================================================
+if (grep $sqlite3 installed_packages); then
+    echo "Package is installed"
+    if (grep $sqlite3 packages_with_updates); then
+	echo "THE PASSWORD IS FOR AN EXTERNAL PROGRAM FOR"
+	echo "FILE CONVERSION"
+	sudo apt-get -q -q update #apt-get runs in quiet mode to avoid lots of output
+	echo "THE PASSWORD IS FOR AN EXTERNAL PROGRAM FOR"
+	echo "FILE CONVERSION"
+	sudo apt-get -q update > /dev/null 2>&1
+    fi
+else
+    sudo apt-get -q install sqlite3 libsqlite3-dev > /dev/null 2>&1
+fi
+
+
+
+#============================================================
+#THIS DOES THE CONVERSION
+#============================================================
+echo '.dump' | sqlite3 "/home/programmer/.mozilla/firefox/idkwp267.default/places.sqlite" > $file
+
+#============================================================
+#THIS RUNS THE PROGRAM I MADE
+#============================================================
+#THIS RUNS IT INDEFAULT MODE
+run ./fnlPrjct
+
+echo '========================================'
+echo 'YOU CAN RUN THIS PROGRAM WITH DIFFERENT FLAGS'
+echo 'FOR SOME DIFFERENT FUNCTIONALITY'
+echo 'THE PROGRAM IS RUN USING "./fnlprjct" ' 
+echo 'TYPE -h FOR HELP WITH THE PROGRAM (NOT THIS SCRIPT)'
+echo '=================exiting================'
+
+
+exit 0
